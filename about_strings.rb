@@ -1,5 +1,19 @@
 require File.expand_path(File.dirname(__FILE__) + '/neo')
 
+1.upto(5) do |num|
+  puts "Hello " + num.to_s
+end
+
+fruits = ['banana', 'apple', 'pear']
+fruits.each do |fruit|
+  puts fruit.capitalize
+end
+
+for fruit in fruits
+  puts fruit.capitalize
+end
+
+
 class AboutStrings < Neo::Koan
   def test_double_quoted_strings_are_strings
     string = "Hello, World"
@@ -54,6 +68,8 @@ EOS
     assert_equal __, long_string.lines.count
     assert_equal __, long_string[0,1]
   end
+  
+  
 
   def test_plus_will_concatenate_two_strings
     string = "Hello, " + "World"
