@@ -1,6 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 class AboutArrayAssignment < Neo::Koan
+  
+  #create a new array names
   def test_non_parallel_assignment
     names = ["John", "Smith"]
     assert_equal __, names
