@@ -1,53 +1,28 @@
 require File.expand_path(File.dirname(__FILE__) + '/neo')
 
-h1 = { "a" => 111, "b" => 222 }
-h2 = { "b" => 333, "c" => 444 }
-h1.merge(h2)
-h2.merge(h1)
-h1.merge(h2) {|key,old,new| new  }
-h1.merge(h2) {|key,old,new| old }
-
-h1.merge(h2) {|key,old,new| old * 2 }
-
-h1.merge(h2) {|key,old,new| old * 5 }
-
-h1.merge(h2) do |key, old, new|
-  if old < new
-    old
-  else
-    new
-  end
-end
-h1.merge(h2) {|k,o,n| o < n ? o : n }
-h1
-h2
-h1.merge!(h2)# Makes h1 permenant change
-h1
-
-
 class AboutHashes < Neo::Koan
   def test_creating_hashes
     empty_hash = Hash.new
-    assert_equal __, empty_hash.class
-    assert_equal(__, empty_hash)
-    assert_equal __, empty_hash.size
+    assert_equal Hash, empty_hash.class
+    assert_equal({}, empty_hash)
+    assert_equal 0, empty_hash.size
   end
 
   def test_hash_literals
     hash = { :one => "uno", :two => "dos" }
-    assert_equal __, hash.size
+    assert_equal 2, hash.size
   end
 
   def test_accessing_hashes
     hash = { :one => "uno", :two => "dos" }
-    assert_equal __, hash[:one]
-    assert_equal __, hash[:two]
-    assert_equal __, hash[:doesnt_exist]
+    assert_equal "uno", hash[:one]
+    assert_equal "dos", hash[:two]
+    assert_equal nil, hash[:doesnt_exist]
   end
 
   def test_accessing_hashes_with_fetch
     hash = { :one => "uno" }
-    assert_equal __, hash.fetch(:one)
+    assert_equal "", hash.fetch(:one)
     assert_raise(___) do
       hash.fetch(:doesnt_exist)
     end
@@ -61,8 +36,8 @@ class AboutHashes < Neo::Koan
     hash = { :one => "uno", :two => "dos" }
     hash[:one] = "eins"
 
-    expected = { :one => __, :two => "dos" }
-    assert_equal __, hash
+    expected = { :one => "uno", :two => "dos" }
+    assert_equal {:one =>"uno", :two=>"dos"}, hash
 
     # Bonus Question: Why was "expected" broken out into a variable
     # rather than used as a literal?
@@ -72,47 +47,47 @@ class AboutHashes < Neo::Koan
     hash1 = { :one => "uno", :two => "dos" }
     hash2 = { :two => "dos", :one => "uno" }
 
-    assert_equal __, hash1 == hash2
+    assert_equal true, hash1 == hash2
   end
 
   def test_hash_keys
     hash = { :one => "uno", :two => "dos" }
-    assert_equal __, hash.keys.size
-    assert_equal __, hash.keys.include?(:one)
-    assert_equal __, hash.keys.include?(:two)
-    assert_equal __, hash.keys.class
+    assert_equal 2, hash.keys.size
+    assert_equal true, hash.keys.include?(:one)
+    assert_equal true, hash.keys.include?(:two)
+    assert_equal Array, hash.keys.class
   end
 
   def test_hash_values
     hash = { :one => "uno", :two => "dos" }
-    assert_equal __, hash.values.size
-    assert_equal __, hash.values.include?("uno")
-    assert_equal __, hash.values.include?("dos")
-    assert_equal __, hash.values.class
+    assert_equal 2, hash.values.size
+    assert_equal true, hash.values.include?("uno")
+    assert_equal true, hash.values.include?("dos")
+    assert_equal Array, hash.values.class
   end
 
   def test_combining_hashes
     hash = { "jim" => 53, "amy" => 20, "dan" => 23 }
     new_hash = hash.merge({ "jim" => 54, "jenny" => 26 })
 
-    assert_equal __, hash != new_hash
+    assert_equal true, hash != new_hash
 
-    expected = { "jim" => __, "amy" => 20, "dan" => 23, "jenny" => __ }
-    assert_equal __, expected == new_hash
+    expected = { "jim" => 54, "amy" => 20, "dan" => 23, "jenny" => 26 }
+    assert_equal true, expected == new_hash
   end
 
   def test_default_value
     hash1 = Hash.new
     hash1[:one] = 1
 
-    assert_equal __, hash1[:one]
-    assert_equal __, hash1[:two]
+    assert_equal 1, hash1[:one]
+    assert_equal nil, hash1[:two]
 
     hash2 = Hash.new("dos")
     hash2[:one] = 1
 
-    assert_equal __, hash2[:one]
-    assert_equal __, hash2[:two]
+    assert_equal 1, hash2[:one]
+    assert_equal "dos", hash2[:two]
   end
 
   def test_default_value_is_the_same_object
@@ -121,11 +96,11 @@ class AboutHashes < Neo::Koan
     hash[:one] << "uno"
     hash[:two] << "dos"
 
-    assert_equal __, hash[:one]
-    assert_equal __, hash[:two]
-    assert_equal __, hash[:three]
+    assert_equal ["uno", "dos"], hash[:one]
+    assert_equal ["uno", "dos"], hash[:two]
+    assert_equal nil, hash[:three]
 
-    assert_equal __, hash[:one].object_id == hash[:two].object_id
+    assert_equal true, hash[:one].object_id == hash[:two].object_id
   end
 
   def test_default_value_with_block
@@ -134,8 +109,8 @@ class AboutHashes < Neo::Koan
     hash[:one] << "uno"
     hash[:two] << "dos"
 
-    assert_equal __, hash[:one]
-    assert_equal __, hash[:two]
-    assert_equal __, hash[:three]
+    assert_equal ["uno"], hash[:one]
+    assert_equal ["dos"], hash[:two]
+    assert_equal [], hash[:three]
   end
 end
