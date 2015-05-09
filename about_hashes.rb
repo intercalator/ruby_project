@@ -37,7 +37,8 @@ class AboutHashes < Neo::Koan
     hash[:one] = "eins"
 
     #expected = { :one => "uno", :two => "dos" }
-   #assert_equal {:one =>"eins", :two=>"dos"}, hash
+    #This should be expected but still not working with path_to_enlightment
+    #assert_equal expected, hash
 
     # Bonus Question: Why was "expected" broken out into a variable
     # rather than used as a literal?
@@ -91,6 +92,7 @@ class AboutHashes < Neo::Koan
   end
 
   def test_default_value_is_the_same_object
+    
     hash = Hash.new([])
 
     hash[:one] << "uno"
